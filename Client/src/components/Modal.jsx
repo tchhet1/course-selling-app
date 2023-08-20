@@ -14,7 +14,7 @@ function EditModal({showModal, setShowModal, course, setCourse}) {
     const navigate = useNavigate();
     
     const submitUpdate = async () => {
-        console.log(token);
+        
         try{
             const response = await Axios.put(`http://localhost:3004/admin/courses/${course.id}`,      
         {
@@ -23,7 +23,7 @@ function EditModal({showModal, setShowModal, course, setCourse}) {
             description: course.description
         }, 
         {
-            headers: { 'Authorization': `Bearer ${token}` },
+            headers: { 'Authorization': token },
         });
 
             //alert("You have updated the course")

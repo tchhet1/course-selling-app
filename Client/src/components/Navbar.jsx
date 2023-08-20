@@ -11,9 +11,6 @@ import { useContext } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import './Navbar.css';
 
@@ -40,57 +37,27 @@ function Navbar() {
     }
 
     return (
-
-    <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-        <Toolbar>
-            <Link to="/">
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Course Selling App
-                </Typography>
-            </Link>
-            {user ?
-                <> 
-                 
-                        <MenuItem>
-                            <Link to="/addcourse">
-                                <Typography textAlign="center">Add Course</Typography>
-                            </Link>
-                        </MenuItem>     
-                        <MenuItem>                           
-                            <AccountCircle onClick={() => setDropdown(true)}/>
-                            {
-                            dropdown &&
-                            <div className='dropddown-item'>
-                                <Link to="/addcourse">
-                                    <Typography textAlign="center">My Account</Typography>
-                                </Link>
-                                
-                                    <Typography textAlign="center" onClick={logoutHandler}>Log out</Typography>
-                                
-                            </div>
-                            }
-
-                        </MenuItem>
-                                                       
-                </>
-                
-                : 
-                <>
-                    <Link to="/login">
-                        <Button color="inherit">Login</Button>
-                    </Link>
-                    <Link to="/signup">
-                        <Button color="inherit">Signup</Button>
-                    </Link>
-                </>
-                
-            }
+        <nav>
+        <div className='navbar'>
+            <div className="logo"><Link to="/" className="nav-links">Course Selling</Link></div>
+            <div className="nav-items">      
+              <ul>
+                <li><Link to="/" className="nav-links">Home</Link></li>
+                <li><Link to="/new" className="nav-links">New</Link></li>
+                <li><Link to="/popular" className="nav-links">Trending</Link></li>
+                <li><Link to="/watchlisted" className="nav-links">Watchlist</Link></li>
+              </ul> 
+            </div>
             
-            
-        </Toolbar>
-        </AppBar>
-    </Box>
+              <ul className="right-nav">
+                {
+                    !user ? <li><Link to="/login" className="nav-links">Login</Link></li>
+                    : <li className="nav-links" onClick={logoutHandler}>Logout</li>
+                }               
+              </ul>
+
+        </div> 
+        </nav>
     )
 }
 export default Navbar;

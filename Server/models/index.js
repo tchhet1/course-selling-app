@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
     description: String,
     price: Number,
     imageLink: String,
-    published: Boolean
+    published: Boolean,
+    createdBy: String
   });
   
   // Define mongoose models

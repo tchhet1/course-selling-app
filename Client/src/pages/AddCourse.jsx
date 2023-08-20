@@ -6,11 +6,9 @@ import Button from '@mui/material/Button';
 import { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import courseContext from '../context/courseContext';
+import userContext from '../context/userContext';
 import './Addcourse.css';
 import Axios from 'axios';
-
-
-
 
 function AddCourse(){
 
@@ -22,6 +20,8 @@ function AddCourse(){
     });
     const [published, setPublished] = useState(true);
     const {courses, setCourses} = useContext(courseContext);
+    const {user, setUser} = useContext(userContext);
+    console.log(user);
 
     const onChangeHandler = (e) => {
         setNewCourse({...newCourse, [e.target.name]: e.target.value});
@@ -38,7 +38,7 @@ function AddCourse(){
             title: newCourse.title,
             description: newCourse.description,
             price: newCourse.price,
-            published: published
+            published: published,
         },
         {
             headers: {

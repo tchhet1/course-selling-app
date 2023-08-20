@@ -33,6 +33,7 @@ function Login() {
             localStorage.setItem("token", "Bearer " + response.data.token);
             alert("You are successfully logged in");
             setUser(true);
+            console.log(response)
             navigate('/');
             return response.data;
         })

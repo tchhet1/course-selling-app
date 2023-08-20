@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login'
 import userContext from "./context/userContext";
 import courseContext from "./context/courseContext";
+import Courses from "./pages/Courses";
 
 
 function App() {
@@ -50,6 +51,7 @@ Axios.get("http://localhost:3004/admin/courses")
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/addcourse" element={<AddCourse />} />
+            <Route exact path="/courses" element={<Courses />} />
           </Routes>
         </courseContext.Provider>
       </userContext.Provider>
