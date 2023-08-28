@@ -8,19 +8,35 @@ import Home from './pages/Home';
 import Login from './pages/Login'
 import userContext from "./context/userContext";
 import courseContext from "./context/courseContext";
+import loggedContext from "./context/loggedContext";
 import Courses from "./pages/Courses";
 
 
 function App() {
 
-const [user, setUser] = useState(false);
+const [user, setUser] = useState(null);
 const [courses, setCourses] = useState([]);
+const [isLoggedin, setIsLoggedin] = useState(false); //currently not using this 
 
 const token = localStorage.getItem('token');
-
+console.log(user);
 useEffect(()=> {
 if(token) {
-    setUser(true);
+  Axios.get('http://localhost:3004/', 
+        {
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": token,
+            }
+        })
+        .then(response => {
+            setUser(response.data.user);
+            return response;
+        })
+        .catch(err => {
+            return err;
+        })
+  
 }
 
 Axios.get("http://localhost:3004/admin/courses")
@@ -41,6 +57,10 @@ Axios.get("http://localhost:3004/admin/courses")
         user: user, 
         setUser: setUser
         }}>
+          <loggedContext.Provider value={{
+            isLoggedin: isLoggedin,
+            setIsLoggedin: setIsLoggedin
+          }}>
           <courseContext.Provider value={{
             courses: courses,
             setCourses: setCourses
@@ -54,6 +74,7 @@ Axios.get("http://localhost:3004/admin/courses")
             <Route exact path="/courses" element={<Courses />} />
           </Routes>
         </courseContext.Provider>
+        </loggedContext.Provider>
       </userContext.Provider>
     
     </div>

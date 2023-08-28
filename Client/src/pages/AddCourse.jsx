@@ -1,14 +1,15 @@
 import TextField from '@mui/material/TextField';
+import { Button, Input, FormControl, InputLabel } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import Stack from '@mui/material/Stack';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Button from '@mui/material/Button';
 import { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import courseContext from '../context/courseContext';
 import userContext from '../context/userContext';
 import './Addcourse.css';
 import Axios from 'axios';
+import LeftBar from '../components/leftBar';
 
 function AddCourse(){
 
@@ -17,20 +18,26 @@ function AddCourse(){
             title: "",
             description: "",
             price: "",
+            image: ""
     });
     const [published, setPublished] = useState(true);
+    const [imageFile, setImageFile] = useState();
     const {courses, setCourses} = useContext(courseContext);
     const {user, setUser} = useContext(userContext);
-    console.log(user);
 
     const onChangeHandler = (e) => {
         setNewCourse({...newCourse, [e.target.name]: e.target.value});
     }
 
+   
+    function imageUpload(e) {
+        console.log(e.target.files);
+        setImageFile(URL.createObjectURL(e.target.files[0]));
+    }
+
     const switchHandler = (e) => {
         setPublished(e.target.checked);
     }
-
 
     const addCourse = () => {        
         Axios.post('http://localhost:3004/admin/addcourse', 
@@ -39,6 +46,8 @@ function AddCourse(){
             description: newCourse.description,
             price: newCourse.price,
             published: published,
+            image: imageFile, 
+            createdBy: user.userId
         },
         {
             headers: {
@@ -51,7 +60,7 @@ function AddCourse(){
             const course = response.data.newCourse;
             setCourses([...courses, course])
             console.log(response.data)
-            navigate('/');
+            navigate('/courses');
             return response.data;
         })
         .catch(err => {
@@ -60,19 +69,37 @@ function AddCourse(){
         })
     }
 
-    console.log(courses);
-    return <div className="addcourse-page">
-        <div className="addcourse-form">
-            <Stack>
-                <TextField id="outlined-basic" name="title" value={newCourse.title} label="Course Title" variant="outlined" margin="normal"  onChange={onChangeHandler}/>
-                <TextField id="outlined-basic" name="description" label="Course Description" variant="outlined" margin="normal" onChange={onChangeHandler}/>
-                <TextField id="outlined-basic" name="price" label="Price" variant="outlined" margin="normal" onChange={onChangeHandler} />
-                <FormControlLabel label="Published"  
-                control={<Switch checked={published} onChange={switchHandler}/>} labelPlacement="start" margin="normal" />
-                <Button variant="contained" onClick={addCourse} margin="normal" >Add Course</Button>
-            </Stack>
+   
+
+   
+    return <div className="addcourse-page two-column">
+        <LeftBar />
+        <div className='main'>
+            <div className="addcourse-form">
+                <Stack>
+                    <TextField id="outlined-basic" name="title" value={newCourse.title} label="Course Title" variant="outlined" margin="normal"  onChange={onChangeHandler}/>
+                    <TextField id="outlined-basic" name="description" label="Course Description" variant="outlined" margin="normal" onChange={onChangeHandler}/>
+                    <TextField id="outlined-basic" name="price" label="Price" variant="outlined" margin="normal" onChange={onChangeHandler} />
+                    <Input
+                        id="file-upload"
+                        name="image"
+                        type="file"
+                        accept=".jpg, .jpeg, .png, .gif"
+                        onChange={imageUpload}
+                        style={{display: "none"}}
+                    />
+                    <Button variant="outlined" component="label" htmlFor="file-upload" color="success">
+                        Upload thumbnail
+                    </Button>
+            
+                    
+                    {imageFile && <img src={imageFile} width="200px" height="auto"/>}
+                    <FormControlLabel label="Published"  
+                    control={<Switch checked={published} onChange={switchHandler}/>} labelPlacement="start" margin="normal" />
+                    <Button variant="contained" onClick={addCourse} margin="normal" >Add Course</Button>
+                </Stack>
+            </div>
         </div>
- 
     </div>
 }
 

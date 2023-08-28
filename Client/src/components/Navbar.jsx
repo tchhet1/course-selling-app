@@ -24,8 +24,10 @@ function Navbar() {
         Axios.post('http://localhost:3004/admin/logout')
         .then((response) => {
             localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            localStorage.removeItem("username");
             alert("You are successfully logged out");
-            setUser(false)
+            setUser(null)
             navigate('/login')
             console.log(localStorage.getItem("token"));
             return response.data;
@@ -40,18 +42,18 @@ function Navbar() {
         <nav>
         <div className='navbar'>
             <div className="logo"><Link to="/" className="nav-links">Course Selling</Link></div>
-            <div className="nav-items">      
+            {/* <div className="nav-items">      
               <ul>
                 <li><Link to="/" className="nav-links">Home</Link></li>
                 <li><Link to="/new" className="nav-links">New</Link></li>
                 <li><Link to="/popular" className="nav-links">Trending</Link></li>
                 <li><Link to="/watchlisted" className="nav-links">Watchlist</Link></li>
               </ul> 
-            </div>
+            </div> */}
             
               <ul className="right-nav">
                 {
-                    !user ? <li><Link to="/login" className="nav-links">Login</Link></li>
+                    !user ? <li><Link to="/login" className="nav-links">Login/Sign up</Link></li>
                     : <li className="nav-links" onClick={logoutHandler}>Logout</li>
                 }               
               </ul>

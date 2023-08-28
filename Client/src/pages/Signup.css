@@ -1,5 +1,8 @@
-.signup {
+.signup-page {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    padding-top: 10%;
 }
+
+
 

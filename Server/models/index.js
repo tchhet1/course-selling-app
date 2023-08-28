@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
   });
   
   const adminSchema = new mongoose.Schema({
+    firstname: String,
+    lastname: String,
     username: String,
     password: String
   });
@@ -18,7 +20,10 @@ const userSchema = new mongoose.Schema({
     price: Number,
     imageLink: String,
     published: Boolean,
-    createdBy: String
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin'
+    }
   });
   
   // Define mongoose models

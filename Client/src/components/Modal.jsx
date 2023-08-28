@@ -37,7 +37,7 @@ function EditModal({showModal, setShowModal, course, setCourse}) {
                 }
                 return item;
             });
-            console.log(newCourses);
+            // console.log(newCourses);
             setCourses([...newCourses]);
             setShowModal(false);
             return response.data;
