@@ -1,6 +1,9 @@
 //This is an admin dashboard 
-//add createdBy field to the course database
-// show all courses and show courses created by the user
+//add createdBy field to the course database - done
+// show all courses and show courses created by the user - done
 //edit course allowed only to the courses added by that user
-//I have converted the image as Base64image. Which is stored as a string in Mongodb.
+//convert image to base64image - done
+//only logged in user will see courses; user not logged in can only access login or signup page
+
+
 

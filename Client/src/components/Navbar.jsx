@@ -41,7 +41,7 @@ function Navbar() {
     return (
         <nav>
         <div className='navbar'>
-            <div className="logo"><Link to="/" className="nav-links">Course Selling</Link></div>
+            <div className="logo"><Link to="/" className="nav-links">CourseStream</Link></div>
             {/* <div className="nav-items">      
               <ul>
                 <li><Link to="/" className="nav-links">Home</Link></li>

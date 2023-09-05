@@ -130,7 +130,7 @@ app.post('/admin/addcourse', authenticateAdmin, async (req, res) => {
 
 
 
-app.get('/admin/courses', async (req, res) => {
+app.get('/admin/courses', authenticateAdmin, async (req, res) => {
     const courses = await Course.find({});
     res.json({courses});
 })

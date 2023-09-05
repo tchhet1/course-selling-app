@@ -29,11 +29,21 @@ function AddCourse(){
         setNewCourse({...newCourse, [e.target.name]: e.target.value});
     }
 
+    const [base64Image, setBase64Image] = useState('');
+
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const base64String = reader.result.split(',')[1];
+            setBase64Image(base64String);
+        };
+        reader.readAsDataURL(file);
+        }
+    };
    
-    function imageUpload(e) {
-        console.log(e.target.files);
-        setImageFile(URL.createObjectURL(e.target.files[0]));
-    }
+    
 
     const switchHandler = (e) => {
         setPublished(e.target.checked);
@@ -46,7 +56,7 @@ function AddCourse(){
             description: newCourse.description,
             price: newCourse.price,
             published: published,
-            image: imageFile, 
+            image: base64Image, 
             createdBy: user.userId
         },
         {
@@ -85,7 +95,7 @@ function AddCourse(){
                         name="image"
                         type="file"
                         accept=".jpg, .jpeg, .png, .gif"
-                        onChange={imageUpload}
+                        onChange={handleImageUpload}
                         style={{display: "none"}}
                     />
                     <Button variant="outlined" component="label" htmlFor="file-upload" color="success">
@@ -93,7 +103,7 @@ function AddCourse(){
                     </Button>
             
                     
-                    {imageFile && <img src={imageFile} width="200px" height="auto"/>}
+                    {base64Image && <img src={`data:image/jpeg;base64,${base64Image}`} width="200px" height="auto"/>}
                     <FormControlLabel label="Published"  
                     control={<Switch checked={published} onChange={switchHandler}/>} labelPlacement="start" margin="normal" />
                     <Button variant="contained" onClick={addCourse} margin="normal" >Add Course</Button>

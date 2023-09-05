@@ -50,7 +50,7 @@ function Login() {
         <Card variant={"outlined" } style={{padding: 20, width: 400, height: 300, display: 'flex', flexDirection: 'column', gap: 15}}>
             <h3 style={{textAlign: "center"}}>Login</h3>
             <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e)=> setUsername(e.target.value)} required/>
-            <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e)=> setPassword(e.target.value)} required/>
+            <TextField id="outlined-basic" type="password" label="Password" variant="outlined" onChange={(e)=> setPassword(e.target.value)} required/>
             <Button variant="contained" onClick={loginHandler}>Login</Button>
             <p style={{textAlign: "center"}}>Not registered yet? <Link to="/signup">Sign up</Link></p>
         </Card>

@@ -35,7 +35,7 @@ nav .logo {
   flex: 2;
   align-self: center;
   color: #E6CB3E !important;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 20px;
 }
 
@@ -65,4 +65,5 @@ ul:first-child {
 .nav-links {
   text-decoration: none;
   color: #ffffff;
+  cursor: pointer;
 }

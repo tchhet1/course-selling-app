@@ -1,12 +1,15 @@
 import LeftBar from '../components/leftBar';
 import userContext from '../context/userContext';
 import { useContext } from 'react';
+import myCourseContext from '../context/myCourseContext'
 import { Link } from 'react-router-dom';
 import '../App.css';
 
 function Home(){
     const {user, setUser} = useContext(userContext);
-    console.log(user);
+    const {myCourses, setMyCourses} = useContext(myCourseContext);
+
+    console.log(myCourses);
     
 
     return <div className="home-page two-column">
@@ -25,12 +28,12 @@ function Home(){
                     </div>
                     <div className='profile-courses'>
                         <h4>Courses:</h4>
-                        <div><b>Number of Courses Added:</b> 5</div>
+                        <div><b>Number of Courses Added:</b> 4</div>
                     </div>
-                    <div className='profile-recent-activity'>
+                    {/* <div className='profile-recent-activity'>
                         <h4>Recent Activity:</h4>
 
-                    </div>
+                    </div> */}
                 </div>
                 : <div>
                     <p>Please <Link to="/login">login/signup</Link> to access your account.</p>

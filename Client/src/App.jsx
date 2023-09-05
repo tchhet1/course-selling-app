@@ -8,7 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login'
 import userContext from "./context/userContext";
 import courseContext from "./context/courseContext";
-import loggedContext from "./context/loggedContext";
+import myCourseContext from "./context/myCourseContext";
 import Courses from "./pages/Courses";
 
 
@@ -16,40 +16,34 @@ function App() {
 
 const [user, setUser] = useState(null);
 const [courses, setCourses] = useState([]);
-const [isLoggedin, setIsLoggedin] = useState(false); //currently not using this 
+const [myCourses, setMyCourses] = useState([]); 
 
 const token = localStorage.getItem('token');
-console.log(user);
+
 useEffect(()=> {
-if(token) {
-  Axios.get('http://localhost:3004/', 
-        {
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": token,
-            }
-        })
-        .then(response => {
-            setUser(response.data.user);
-            return response;
-        })
-        .catch(err => {
-            return err;
-        })
-  
-}
+  async function getUser(){
+    try{
+      const response = await Axios.get('http://localhost:3004/', 
+      {
+          headers: {
+              "Content-type": "application/json",
+              "Authorization": token,
+          }
+      });
 
-Axios.get("http://localhost:3004/admin/courses")
-.then(response => {
-    console.log(courses);
-    setCourses([...response.data.courses]);
-})
-.catch(err => {
-    console.log(err);
-    return err;
-})
+      setUser(response.data.user);
+    } catch(err){
+      console.log(err);
+      return err;
+    } 
+     
+  }
 
-}, [])
+  if(token) {
+    getUser();
+  } 
+
+}, [token])
  
   return (
     <div>
@@ -57,9 +51,9 @@ Axios.get("http://localhost:3004/admin/courses")
         user: user, 
         setUser: setUser
         }}>
-          <loggedContext.Provider value={{
-            isLoggedin: isLoggedin,
-            setIsLoggedin: setIsLoggedin
+          <myCourseContext.Provider value={{
+            myCourses: myCourses,
+            setMyCourses: setMyCourses
           }}>
           <courseContext.Provider value={{
             courses: courses,
@@ -70,11 +64,11 @@ Axios.get("http://localhost:3004/admin/courses")
             <Route exact path="/" element={<Home />} />
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="/addcourse" element={<AddCourse />} />
-            <Route exact path="/courses" element={<Courses />} />
+            <Route exact path="/addcourse" element={user ? <AddCourse /> : <Login />} />
+            <Route exact path="/courses" element={user ? <Courses /> : <Login />} />
           </Routes>
         </courseContext.Provider>
-        </loggedContext.Provider>
+        </myCourseContext.Provider>
       </userContext.Provider>
     
     </div>

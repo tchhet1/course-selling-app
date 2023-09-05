@@ -60,6 +60,8 @@ function EditModal({showModal, setShowModal, course, setCourse}) {
                     onChange={(e)=> setCourse({...course, title: e.target.value})} required/>
                     <TextField id="outlined-basic" label="Description" value={course.description} variant="outlined" 
                     onChange={(e)=> setCourse({...course, description: e.target.value})} required/>
+                    <TextField id="outlined-basic" label="Price" value={course.price} variant="outlined" 
+                    onChange={(e)=> setCourse({...course, price: e.target.value})} required/>
                     <Button variant="contained" onClick={submitUpdate}>Submit update</Button>
                 </div>
             </div>                      
