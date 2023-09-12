@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
@@ -9,11 +10,12 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-const secret = 'bcbdcsbhbjhbwjhfwejfuqbfhwbefwefkek';
-const url = 'mongodb+srv://triptichhetri312:JzBI19r4oqyZuObN@cluster0.fmooby1.mongodb.net/course-selling?retryWrites=true&w=majority';
-const connect = async () => {
-     await mongoose.connect(url);
-}
+const secret = process.env.SECRET_KEY;
+const url = process.env.DB_URL;
+
+// const connect = async () => {
+//      await mongoose.connect(url);
+// }
 
 mongoose.connect(url)
 .catch(e => console.log("error " + e));
