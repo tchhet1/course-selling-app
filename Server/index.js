@@ -17,8 +17,8 @@ const url = process.env.DB_URL;
 //      await mongoose.connect(url);
 // }
 
-mongoose.connect(url)
-.catch(e => console.log("error " + e));
+mongoose.connect("mongodb+srv://triptichhetri312:JzBI19r4oqyZuObN@cluster0.fmooby1.mongodb.net/course-selling?retryWrites=true&w=majority")
+.catch(e => console.log("mongoose error " +  e));
 
 
 const generateToken = (username, userId) => {
@@ -117,7 +117,6 @@ app.get('/admin/courses', authenticateAdmin, async (req, res) => {
 app.get('/admin/courses/:userId', authenticateAdmin, async (req, res) => {
     const {userId} = req.params;
     const courses = await Course.find({ createdBy: {$eq: userId} });
-    console.log(courses);
     res.json({courses});
 })
 
